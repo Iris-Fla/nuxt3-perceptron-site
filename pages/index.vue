@@ -1,3 +1,3 @@
 <template>
-    <h1>刹那★月光</h1>
+    <h1>にゃーん...</h1>
 </template>

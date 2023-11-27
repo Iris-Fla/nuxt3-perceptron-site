@@ -11,8 +11,15 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "npm-check-updates": "^16.14.11",
     "nuxt": "^3.8.2",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.1.0",
+    "@vueuse/nuxt": "^10.6.1",
+    "nuxt-icon": "^0.6.6",
+    "usebootstrap": "^0.1.89"
   }
 }
