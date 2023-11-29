@@ -1,23 +1,21 @@
 <template>
-		<header>
-			<h1><NuxtLink to="/">パーセプトロンを学ぼう!</NuxtLink></h1>
-		</header>
+	<Navbar class="bluebg">
+		<Container type="fluid">
+			<NavbarBrand class="wtext">SampleText</NavbarBrand>
+		</Container>
+	</Navbar>
 </template>
 
 <style>
-header {
-	color: #fff;
-	padding: 20px;
+.bluebg  {
 	background-color: #4EA6D7;
 }
-header a {
-    color: #fff;
-	text-decoration: none;
+.wtext {
+	color: aliceblue;
+	text-shadow: 1px 1px 2px black;
+	font-size: 30px
 }
-header a:visited {
-    color: #fff;
-}
-header a:hover {
-    color: #fff;
+.wtext:hover {
+	color: aliceblue;
 }
 </style>
