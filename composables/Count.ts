@@ -15,3 +15,7 @@ export const WeightData = () => {
 export const BiasData = () => {
     return useState('Bdata', () => 1)
 }
+
+const double = (x: number) => {
+    return x * 2
+}
