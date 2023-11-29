@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { QuestionTitle,WeightData,BiasData } from '@/composables/Count'
-const Qtitle = QuestionTitle()
-const Wdata = WeightData()
-const Bdata = BiasData()
+import { PlayerData,TitleData,BiasData } from '@/composables/Count'
+const Pdata = PlayerData()
+const Tdata = TitleData()
 
 </script>
 <template>
     <Container>
         <h1>にゃーん...</h1>
-        <h2>{{ Qtitle.one }}</h2>
+        <h2>{{ Tdata }}</h2>
+        <h2>{{ Pdata.Datalist[1].title }}</h2>
+        <CountMain />
     </Container>
 </template>
