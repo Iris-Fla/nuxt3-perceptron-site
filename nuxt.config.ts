@@ -7,6 +7,7 @@ export default defineNuxtConfig({
       "@nuxt/image"
   ],
   app: {
+    　pageTransition: { name: 'page', mode: 'out-in' },
       head: {
           title: 'パーセプトロンを学ぼう！',
           meta: [

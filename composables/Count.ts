@@ -1,5 +1,5 @@
 export const PlayerData = () => {
-    return useState('Pdata', () => shallowRef({
+    return useState('Pdata', () => ({
         Datalist:[
             {title:'にゃおーん',weight:1,},
             {title:'にゃおん',weight:2,},
