@@ -4,26 +4,33 @@ const Pdata = PlayerData();
 const Tdata = TitleData();
 const Bdata = BiasData();
 
-const DeleteTaskData = (title: string, weight: number) => {
+const alertMessage = ref("");
+
+const DeleteTaskData = (id: number, title: string, weight: number) => {
+  alertMessage.value = "";
   Pdata.value.Datalist = Pdata.value.Datalist.filter(
-    (item) => item.title !== title || item.weight !== weight
+    (item) => item.title !== title || item.weight !== weight || item.id !== id
   );
 };
 
 const MakeTaskData = () => {
-  Pdata.value.Datalist.push({
-    title: "",
-    weight: Number(),
-  });
+  if (Pdata.value.Datalist.length >= 2) {
+    alertMessage.value = "Datalistの長さが10以上です";
+  } else {
+    Pdata.value.Datalist.push({
+      id: Pdata.value.Datalist.length + 1,
+      title: "",
+      weight: Number(),
+    });
+  }
 };
-
 </script>
 <template>
   <Container>
     <h1>{{ Pdata.Datalist[0].title }}</h1>
     <h2>{{ Tdata }}</h2>
     <transition-group tag="div" name="fade">
-      <Alert theme="primary" v-for="list in Pdata.Datalist" :key="list.weight">
+      <Alert theme="primary" v-for="list in Pdata.Datalist" :key="list.id">
         <Row align-items="center">
           <Col col="11">
             <BInputGroup>
@@ -51,7 +58,7 @@ const MakeTaskData = () => {
           <Col col="1">
             <b-button
               button="primary"
-              @click="DeleteTaskData(list.title, list.weight)"
+              @click="DeleteTaskData(list.id, list.title, list.weight)"
             >
               削除
             </b-button>
@@ -59,40 +66,36 @@ const MakeTaskData = () => {
         </Row>
       </Alert>
       <Alert>
-      <Row align-items="center">
-        <Col col="11">
-          <BInputGroup>
-            <BInputGroupText
-              id="BInputGroup
+        <Row align-items="center">
+          <Col col="11">
+            <BInputGroup>
+              <BInputGroupText
+                id="BInputGroup
             "
-            >
-              タイトル
-            </BInputGroupText>
-            <BFormInput
-              type="text"
-              placeholder="タイトルを入力"
-              aria-label="Title"
-              v-model="Tdata"
-            />
-            <BInputGroupText>バイアス</BInputGroupText>
-            <BFormInput
-              type="text"
-              placeholder="バイアスを入力"
-              aria-label="Weight"
-              v-model="Bdata"
-            />
-          </BInputGroup>
-        </Col>
-        <Col col="1">
-          <b-button
-            button="primary"
-            @click="MakeTaskData()"
-          >
-            追加
-          </b-button>
-        </Col>
-      </Row>
-    </Alert>
+              >
+                タイトル
+              </BInputGroupText>
+              <BFormInput
+                type="text"
+                placeholder="タイトルを入力"
+                aria-label="Title"
+                v-model="Tdata"
+              />
+              <BInputGroupText>バイアス</BInputGroupText>
+              <BFormInput
+                type="text"
+                placeholder="バイアスを入力"
+                aria-label="Weight"
+                v-model="Bdata"
+              />
+            </BInputGroup>
+          </Col>
+          <Col col="1">
+            <b-button button="primary" @click="MakeTaskData()"> 追加 </b-button>
+          </Col>
+        </Row>
+      </Alert>
+      <Alert v-if="alertMessage" :theme="'danger'">{{ alertMessage }}</Alert>
     </transition-group>
   </Container>
 </template>

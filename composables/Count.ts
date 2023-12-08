@@ -1,9 +1,9 @@
 export const PlayerData = () => {
     return useState('Pdata', () => ({
         Datalist:[
-            {title:'にゃおーん',weight:1,},
-            {title:'にゃおん',weight:2,},
-            {title:'にゃお',weight:3,},
+            {id:1,title:'にゃおーん',weight:1,},
+            {id:2,title:'にゃおん',weight:2,},
+            {id:3,title:'にゃお',weight:3,},
         ]
     }))
 }
