@@ -1,5 +1,13 @@
 <template>
-  <Header />
+  <div class="Kiwi">
+    <Header />
     <slot />
-  <Footer />
+    <Footer />
+  </div>
 </template>
+
+<style setup>
+.Kiwi {
+  font-family: "Kiwi Maru", serif;
+}
+</style>

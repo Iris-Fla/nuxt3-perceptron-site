@@ -1,9 +1,7 @@
 <template>
-  <div class="Kiwi">
     <NuxtLayout>
       <NuxtPage></NuxtPage>
     </NuxtLayout>
-  </div>
 </template>
 <style scoped>
 .page-enter-active,
@@ -16,8 +14,6 @@
   filter: blur(1rem);
 }
 
-.Kiwi {
-  font-family: "Kiwi Maru", serif;
-}
+
 
 </style>
