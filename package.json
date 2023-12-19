@@ -20,6 +20,7 @@
     "@nuxt/image": "^1.1.0",
     "@vueuse/nuxt": "^10.7.0",
     "nuxt-icon": "^0.6.7",
-    "usebootstrap": "^0.2.1"
+    "usebootstrap": "^0.2.1",
+    "usebootstrap-docs": "^0.0.11"
   }
 }
