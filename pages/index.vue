@@ -44,9 +44,7 @@ const MakeTaskData = () => {
         <ToastBody>{{ alertMessage }}</ToastBody>
       </Toast>
     </div>
-    <Alert>
-      <Row align-items="center">
-        <Col col="11">
+    <Alert shadow theme="light">
         <BInputGroup>
           <BInputGroupText id="BInputGroup
             ">
@@ -56,11 +54,9 @@ const MakeTaskData = () => {
           <BInputGroupText>バイアス</BInputGroupText>
           <BFormInput type="text" placeholder="バイアスを入力" aria-label="Weight" v-model="BiasData" />
         </BInputGroup>
-        </Col>
-      </Row>
     </Alert>
-
-    <Alert shadow theme="primary">
+    <!--追加用-->
+    <Alert margin="s-5 e-5" shadow theme="primary" class="alert-style">
       <Row align-items="center">
         <Col col="11">
         <BInputGroup>
@@ -68,18 +64,18 @@ const MakeTaskData = () => {
             ">
             タイトル
           </BInputGroupText>
-          <BFormInput type="text" placeholder="タイトルを入力" aria-label="Title" v-model="DefaultData.title" />
+          <BFormInput size="md" type="text" placeholder="タイトルを入力" aria-label="Title" v-model="DefaultData.title" />
           <BInputGroupText>重み</BInputGroupText>
           <BFormInput type="text" placeholder="重みを入力" aria-label="Weight" v-model="DefaultData.weight" />
         </BInputGroup>
         </Col>
         <Col col="1">
-        <b-button button="primary" @click="MakeTaskData()"> 追加 </b-button>
+        <b-button button="success" @click="MakeTaskData()"><BIcon icon="bi:plus-circle"></BIcon></b-button>
         </Col>
       </Row>
     </Alert>
     <transition-group name="fade">
-      <Alert shadow theme="primary" v-for="list in AddData.Datalist" :key="list.id">
+      <Alert margin="s-5 e-5" class="alert-style" shadow theme="primary" v-for="list in AddData.Datalist" :key="list.id">
         <Row align-items="center">
           <Col col="11">
           <BInputGroup>
@@ -93,24 +89,37 @@ const MakeTaskData = () => {
           </BInputGroup>
           </Col>
           <Col col="1">
-          <b-button button="primary" @click="DeleteTaskData(list.id)">
-            削除
+          <b-button button="danger" @click="DeleteTaskData(list.id)">
+            <BIcon icon="bi:dash-circle" />
           </b-button>
           </Col>
         </Row>
       </Alert>
     </transition-group>
+    <h1>たまざらし</h1>
   </Container>
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+.alert-style {
+ border-radius: 20px;
+ background-color: #4EA6D7;
 }
 
-.fade-enter,
+
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  transform: translate(-50px,0px)
+}
+
+.fade-leave-active {
+  position: absolute;
 }
 </style>

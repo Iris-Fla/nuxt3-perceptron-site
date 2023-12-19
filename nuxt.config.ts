@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
       '@vueuse/nuxt',
       'usebootstrap',
+      'usebootstrap-docs',
       'nuxt-icon',
       "@nuxt/image"
   ],
