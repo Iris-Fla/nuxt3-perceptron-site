@@ -5,7 +5,9 @@ export const useData = () => {
             { id: 2, title: 'にゃおーん', weight: 3, },
             { id: 3, title: 'にゃおーん', weight: 2, },
         ],
-        titleData: 'にゃおーん',
+        titleList: [
+            { yesPower:'俺', noPower:'俺以外'},
+        ],
         biasData: 3,
     }))
 }

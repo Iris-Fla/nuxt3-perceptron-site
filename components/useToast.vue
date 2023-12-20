@@ -6,17 +6,18 @@
             <small>11 mins ago</small>
             <CloseButton dismiss="toast" />
         </ToastHeader>
-        <ToastBody>データの数は10個までです</ToastBody>
+        <ToastBody>{{ alertMessage }}</ToastBody>
     </Toast>
 </template>
 
 <script setup lang="ts">
 
 interface Props {
-    alertMessage: string;
+    alertMessage: string
 }
-
-withDefaults(defineProps<Props>(), {
-    alertMessage: '',
+const props = withDefaults(defineProps<Props>(), {
+    alertMessage: "CandySweet"
 })
+
+
 </script>
