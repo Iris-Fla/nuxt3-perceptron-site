@@ -26,7 +26,7 @@ const MakeTaskData = () => {
   }
 };
 
-const playQuestion = () => { 
+const playQuestion = () => {
   if (userData.value.dataList.length < 3) {
     alertMessage.value = "データの数は3個以上必要です。";
   } else {
@@ -51,30 +51,63 @@ const showData = () => {
 </script>
 <template>
   <Container>
-    <h2>{{ userData.titleList[0].yesPower }}</h2>
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" v-if="alertMessage">
-      <Toast show>
-        <ToastHeader>
-          <b-img src="https://dummyimage.com/20x20/ff0015/ff0015" rounded margin="e-2" alt="Card image cap" />
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <CloseButton dismiss="toast" />
-        </ToastHeader>
-        <ToastBody>{{ alertMessage }}</ToastBody>
-      </Toast>
-    </div>
+    <h2>{{ userData.titleList[0].do }}</h2>
     <Alert shadow theme="light">
-      <BInputGroup>
-        <BInputGroupText id="BInputGroup" class="d-none d-md-block">
-          タイトル
-        </BInputGroupText>
-        <BFormInput type="text" placeholder="タイトルを入力" aria-label="Title" />
-        <BInputGroupText class="d-none d-md-block">バイアス</BInputGroupText>
-        <BFormInput type="text" placeholder="バイアスを入力" aria-label="Weight" v-model="userData.biasData" />
-        <b-button button="success" @click="MakeTaskData()">
-          <BIcon icon="bi:plus-circle"></BIcon>
-        </b-button>
+      <BInputGroup margin="b-2" size="lg">
+        <BFormInput
+          type="text"
+          placeholder="(人名)が"
+          aria-label="Name"
+          v-model="userData.titleList[0].name"
+        />
+        <BInputGroupText><b>が</b></BInputGroupText>
+        <BFormInput
+          type="text"
+          placeholder="~を ~で ~に"
+          aria-label="Weight"
+          v-model="userData.titleList[0].where"
+        />
+        <Dropdown>
+          <DropdownToggle button="success" size="lg">で</DropdownToggle>
+          <DropdownMenu alignment="end">
+            <DropdownItem> Action </DropdownItem>
+            <DropdownItem> Another action </DropdownItem>
+            <DropdownItem> Something else here </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </BInputGroup>
+      <BInputGroup margin="b-2">
+        <BFormInput
+          type="text"
+          placeholder="○○する"
+          aria-label="Do"
+          v-model="userData.titleList[0].do"
+        />
+        <BInputGroupText><b>または</b></BInputGroupText>
+        <BFormInput
+          margin="e-3"
+          type="text"
+          placeholder="○○しない"
+          aria-label="Don't"
+          v-model="userData.titleList[0].dont"
+        />
+        <BInputGroupText><b>バイアス</b></BInputGroupText>
+        <BFormInput
+          type="number"
+          placeholder="バイアスを入力してください"
+          aria-label="Don't"
+          v-model="userData.titleList[0].dont"
+        />
+      </BInputGroup>
+      <b-button
+        margin="t-2"
+        size="lg"
+        button="success"
+        @click="MakeTaskData()"
+        class="w-100"
+      >
+        要素の追加<BIcon icon="bi:plus-circle" />
+      </b-button>
     </Alert>
     <TransitionGroup name="fade" tag="div">
       <div v-for="list in userData.dataList" :key="list.id">
@@ -82,9 +115,19 @@ const showData = () => {
           <BInputGroupText id="BInputGroup" class="d-none d-md-block">
             タイトル
           </BInputGroupText>
-          <BFormInput type="text" placeholder="タイトルを入力" aria-label="Title" v-model="list.id" />
+          <BFormInput
+            type="text"
+            placeholder="何をする?"
+            aria-label="Title"
+            v-model="list.title"
+          />
           <BInputGroupText class="d-none d-md-block">重み</BInputGroupText>
-          <BFormInput type="text" placeholder="重みを入力" aria-label="Weight" v-model="list.weight" />
+          <BFormInput
+            type="number"
+            placeholder="重み(数字)"
+            aria-label="Weight"
+            v-model="list.weight"
+          />
           <b-button button="danger" @click="DeleteTaskData(list.id)">
             消
             <BIcon icon="bi:dash-circle" />
@@ -115,6 +158,26 @@ const showData = () => {
     </transition-group> -->
     <b-button button="primary" @click="playQuestion">実行す</b-button>
     <h1>たまざらし</h1>
+    <div
+      class="position-fixed bottom-0 end-0 p-3"
+      style="z-index: 11"
+      v-if="alertMessage"
+    >
+      <Toast show>
+        <ToastHeader>
+          <b-img
+            src="https://dummyimage.com/20x20/ff0015/ff0015"
+            rounded
+            margin="e-2"
+            alt="Card image cap"
+          />
+          <strong class="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <CloseButton dismiss="toast" />
+        </ToastHeader>
+        <ToastBody>{{ alertMessage }}</ToastBody>
+      </Toast>
+    </div>
   </Container>
 </template>
 
