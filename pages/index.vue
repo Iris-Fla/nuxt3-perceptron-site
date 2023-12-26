@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import "~/assets/css/default.css";
+
 //auto importされるので、importは不要(VScodeの参照元が出ないので表記)
 import { ref } from "vue";
 import { useData } from "@/composables/userData";
@@ -29,6 +31,8 @@ const MakeTaskData = () => {
 const playQuestion = () => {
   if (userData.value.dataList.length < 3) {
     alertMessage.value = "データの数は3個以上必要です。";
+  } else if (userData.value.dataList.some(item => item.title.trim() === '')) {
+    alertMessage.value = "タイトルが空白のデータが存在します。";
   } else {
     navigateTo("/question");
   }
@@ -50,92 +54,95 @@ const showData = () => {
 };
 </script>
 <template>
-  <Container>
-    <h2>{{ userData.titleList[0].do }}</h2>
-    <Alert shadow theme="light">
-      <BInputGroup margin="b-2" size="lg">
-        <BFormInput
-          type="text"
-          placeholder="(人名)が"
-          aria-label="Name"
-          v-model="userData.titleList[0].name"
-        />
-        <BInputGroupText><b>が</b></BInputGroupText>
-        <BFormInput
-          type="text"
-          placeholder="~を ~で ~に"
-          aria-label="Weight"
-          v-model="userData.titleList[0].where"
-        />
-        <Dropdown>
-          <DropdownToggle button="success" size="lg">で</DropdownToggle>
-          <DropdownMenu alignment="end">
-            <DropdownItem> Action </DropdownItem>
-            <DropdownItem> Another action </DropdownItem>
-            <DropdownItem> Something else here </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </BInputGroup>
-      <BInputGroup margin="b-2">
-        <BFormInput
-          type="text"
-          placeholder="○○する"
-          aria-label="Do"
-          v-model="userData.titleList[0].do"
-        />
-        <BInputGroupText><b>または</b></BInputGroupText>
-        <BFormInput
-          margin="e-3"
-          type="text"
-          placeholder="○○しない"
-          aria-label="Don't"
-          v-model="userData.titleList[0].dont"
-        />
-        <BInputGroupText><b>バイアス</b></BInputGroupText>
-        <BFormInput
-          type="number"
-          placeholder="バイアスを入力してください"
-          aria-label="Don't"
-          v-model="userData.titleList[0].dont"
-        />
-      </BInputGroup>
-      <b-button
-        margin="t-2"
-        size="lg"
-        button="success"
-        @click="MakeTaskData()"
-        class="w-100"
-      >
-        要素の追加<BIcon icon="bi:plus-circle" />
-      </b-button>
-    </Alert>
-    <TransitionGroup name="fade" tag="div">
-      <div v-for="list in userData.dataList" :key="list.id">
-        <BInputGroup shadow class="inputGroup" margin="b-4">
-          <BInputGroupText id="BInputGroup" class="d-none d-md-block">
-            タイトル
-          </BInputGroupText>
+  <div class="defaultBackground">
+    <Container>
+      <h2>{{ userData.titleList[0].do }}</h2>
+      <Alert shadow theme="light">
+        <BInputGroup margin="b-2" size="lg">
+          <BFormFloating>
+            <BFormInput
+              type="text"
+              readonly
+              disabled
+              placeholder="だれが"
+              aria-label="Name"
+              v-model="userData.titleList[0].name"
+            />
+            <BFormLabel for="floatingInput">だれが?</BFormLabel>
+          </BFormFloating>
+          <BInputGroupText><b>が</b></BInputGroupText>
+          <!-- <BFormFloating>
           <BFormInput
             type="text"
-            placeholder="何をする?"
-            aria-label="Title"
-            v-model="list.title"
+            placeholder="~を ~で ~に"
+            aria-label="Weight"
+            v-model="userData.titleList[0].where"
           />
-          <BInputGroupText class="d-none d-md-block">重み</BInputGroupText>
+          <BFormLabel for="floatingInput">何を,どこで,誰に</BFormLabel>
+        </BFormFloating> -->
+        </BInputGroup>
+        <BInputGroup margin="b-2">
+          <BFormInput
+            type="text"
+            placeholder="○○する"
+            aria-label="Do"
+            v-model="userData.titleList[0].do"
+          />
+          <BInputGroupText><b>または</b></BInputGroupText>
+          <BFormInput
+            margin="e-3"
+            type="text"
+            placeholder="○○しない"
+            aria-label="Don't"
+            v-model="userData.titleList[0].dont"
+          />
+          <BInputGroupText><b>バイアス</b></BInputGroupText>
           <BFormInput
             type="number"
-            placeholder="重み(数字)"
-            aria-label="Weight"
-            v-model="list.weight"
+            placeholder="バイアスを入力してください"
+            aria-label="Don't"
+            v-model="userData.titleList[0].dont"
           />
-          <b-button button="danger" @click="DeleteTaskData(list.id)">
-            消
-            <BIcon icon="bi:dash-circle" />
-          </b-button>
         </BInputGroup>
-      </div>
-    </TransitionGroup>
-    <!-- <transition-group name="fade">
+        <b-button
+          margin="t-2"
+          size="lg"
+          button="success"
+          @click="MakeTaskData()"
+          class="w-100"
+        >
+          要素の追加<BIcon icon="bi:plus-circle" />
+        </b-button>
+      </Alert>
+      <TransitionGroup name="fade" tag="div">
+        <div v-for="list in userData.dataList" :key="list.id">
+          <BInputGroup shadow class="inputGroup" margin="b-4">
+            <BFormFloating>
+              <BFormInput
+                type="text"
+                placeholder="何をする?"
+                aria-label="Title"
+                v-model="list.title"
+              />
+              <BFormLabel for="floatingInput">何をする?</BFormLabel>
+            </BFormFloating>
+            <BFormFloating>
+              <BFormInput
+                type="number"
+                placeholder="重み(数字)"
+                aria-label="Weight"
+                v-model="list.weight"
+              />
+              <BFormLabel for="floatingInput">重み(数字)</BFormLabel>
+            </BFormFloating>
+            <b-button button="danger" @click="DeleteTaskData(list.id)">
+              さくじょ
+              <BIcon icon="bi:dash-circle" />
+            </b-button>
+          </BInputGroup>
+        </div>
+      </TransitionGroup>
+      <!-- <transition-group name="fade">
       <Alert margin="s-5 e-5" class="alert-style" shadow theme="primary" v-for="list in userData.dataList" :key="list.id">
         <Row align-items="center">
           <Col col="10">
@@ -156,52 +163,28 @@ const showData = () => {
         </Row>
       </Alert>
     </transition-group> -->
-    <b-button button="primary" @click="playQuestion">実行す</b-button>
-    <h1>たまざらし</h1>
-    <div
-      class="position-fixed bottom-0 end-0 p-3"
-      style="z-index: 11"
-      v-if="alertMessage"
-    >
-      <Toast show>
-        <ToastHeader>
-          <b-img
-            src="https://dummyimage.com/20x20/ff0015/ff0015"
-            rounded
-            margin="e-2"
-            alt="Card image cap"
-          />
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <CloseButton dismiss="toast" />
-        </ToastHeader>
-        <ToastBody>{{ alertMessage }}</ToastBody>
-      </Toast>
-    </div>
-  </Container>
+      <b-button button="primary" @click="playQuestion">実行す</b-button>
+      <h1>たまざらし</h1>
+      <div
+        class="position-fixed bottom-0 end-0 p-3"
+        style="z-index: 11"
+        v-if="alertMessage"
+      >
+        <Toast show>
+          <ToastHeader>
+            <b-img
+              src="https://dummyimage.com/20x20/ff0015/ff0015"
+              rounded
+              margin="e-2"
+              alt="Card image cap"
+            />
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <CloseButton dismiss="toast" />
+          </ToastHeader>
+          <ToastBody>{{ alertMessage }}</ToastBody>
+        </Toast>
+      </div>
+    </Container>
+  </div>
 </template>
-
-<style scoped>
-.inputGroup {
-  border: solid 20px #4ea6d7;
-  outline: rgb(156, 156, 156) 1px solid;
-  border-radius: 10px;
-  background-color: #4ea6d7;
-}
-
-.fade-move,
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translate(-50px, 0px);
-}
-
-.fade-leave-active {
-  position: absolute;
-}
-</style>
