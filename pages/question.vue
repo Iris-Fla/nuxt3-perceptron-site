@@ -9,7 +9,7 @@ const ans = ref(0)
 
 const nextQuestion = () => {
   if (nowQuestion.value === countQuestion.value - 1) {
-    alert("終了");
+    End();
   }
   
   nowQuestion.value++;
@@ -17,9 +17,13 @@ const nextQuestion = () => {
 
 const nextQuestionX = () => {
   if (nowQuestion.value === countQuestion.value - 1) {
-    alert("終了");
+    End();
   }
   nowQuestion.value++;
+};
+
+const End = () => {
+  alert("終了");
 };
 
 </script>

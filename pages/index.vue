@@ -17,7 +17,7 @@ const DeleteTaskData = (id: number) => {
 };
 
 const MakeTaskData = () => {
-  if (userData.value.dataList.length >= 4) {
+  if (userData.value.dataList.length >= 10) {
     alertMessage.value = "データの数は10個までです。";
   } else {
     userData.value.dataList.push({
@@ -32,8 +32,11 @@ const playQuestion = () => {
   if (userData.value.dataList.length < 3) {
     alertMessage.value = "データの数は3個以上必要です。";
   } else if (userData.value.dataList.some(item => item.title.trim() === '')) {
-    alertMessage.value = "タイトルが空白のデータが存在します。";
-  } else {
+    alertMessage.value = "タイトルが空のデータが存在します。";
+  } else if (userData.value.dataList.some(item => isNaN(item.weight))) {
+    alertMessage.value = "重みが空のデータが存在します。";
+  }
+  else {
     navigateTo("/question");
   }
 };
