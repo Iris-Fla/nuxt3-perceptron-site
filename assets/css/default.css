@@ -1,7 +1,12 @@
 .defaultBackground {
   background-color: #fef4e8;
-  height: 100vh;
+  height: 170vh;
 }
+
+.questionBackground {
+    background-color: #fef4e8;
+    height: 100vh;
+  }
 
 .inputGroup {
   border: solid 20px #6d9c37;

@@ -164,6 +164,7 @@ const showData = () => {
     </transition-group> -->
       <b-button button="primary" @click="playQuestion">実行す</b-button>
       <h1>たまざらし</h1>
+      <NuxtLink to="/question">Go to question</NuxtLink>
       <div
         class="position-fixed bottom-0 end-0 p-3"
         style="z-index: 11"
