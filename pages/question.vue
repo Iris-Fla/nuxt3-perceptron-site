@@ -8,10 +8,10 @@ const nowQuestion = ref(0);
 const ans = ref(0)
 
 const nextQuestion = () => {
+  ans.value += userData.value.dataList[nowQuestion.value].weight * 1;
   if (nowQuestion.value === countQuestion.value - 1) {
     End();
   }
-  
   nowQuestion.value++;
 };
 
@@ -24,6 +24,12 @@ const nextQuestionX = () => {
 
 const End = () => {
   alert("終了");
+  ans.value += userData.value.biasData;
+  if (ans.value < 0) {
+    alert(userData.value.titleList[0].name + "は" + userData.value.titleList[0].do + "のはやめるらしいです");
+  } else {
+    alert(userData.value.titleList[0].name + "は" + userData.value.titleList[0].do + "らしいです");
+  }
 };
 
 </script>
@@ -31,6 +37,7 @@ const End = () => {
   <Container>
     <div>今の問題 {{ nowQuestion }}</div>
     <div>問題数 {{ countQuestion }}</div>
+    <b-button button="primary"><BIcon icon="bi:circle" />ホームに戻る</b-button>
     <Card class="questionCard text-center" margin="4">
         <CardTitle>ずんだもんは {{ userData.dataList[nowQuestion].title }} ?</CardTitle>
         <Row>

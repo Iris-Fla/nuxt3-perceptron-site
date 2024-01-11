@@ -32,9 +32,11 @@ const playQuestion = () => {
   if (userData.value.dataList.length < 3) {
     alertMessage.value = "データの数は3個以上必要です。";
   } else if (userData.value.dataList.some(item => item.title.trim() === '')) {
-    alertMessage.value = "タイトルが空のデータが存在します。";
-  } else if (userData.value.dataList.some(item => isNaN(item.weight))) {
+    alertMessage.value = "条件が空のデータが存在します。";
+  } else if (userData.value.dataList.some(item => item.weight == null)) {
     alertMessage.value = "重みが空のデータが存在します。";
+  } else if (isNaN(userData.value.biasData) || userData.value.titleList[0].do.trim() === '') {
+  alertMessage.value = "タイトル欄に空のデータが存在します。";
   }
   else {
     navigateTo("/question");
@@ -85,26 +87,20 @@ const showData = () => {
         </BFormFloating> -->
         </BInputGroup>
         <BInputGroup margin="b-2">
+          <BInputGroupText><b>出来事</b></BInputGroupText>
           <BFormInput
             type="text"
             placeholder="○○する"
             aria-label="Do"
             v-model="userData.titleList[0].do"
-          />
-          <BInputGroupText><b>または</b></BInputGroupText>
-          <BFormInput
-            margin="e-3"
-            type="text"
-            placeholder="○○しない"
-            aria-label="Don't"
-            v-model="userData.titleList[0].dont"
+            margin="e-4"
           />
           <BInputGroupText><b>バイアス</b></BInputGroupText>
           <BFormInput
             type="number"
             placeholder="バイアスを入力してください"
             aria-label="Don't"
-            v-model="userData.titleList[0].dont"
+            v-model="userData.biasData"
           />
         </BInputGroup>
         <b-button
