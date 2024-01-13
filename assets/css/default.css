@@ -3,16 +3,20 @@
   height: 170vh;
 }
 
+.basicShadow {
+  box-shadow: 0px 0px 3px 2px #2594d5;
+}
+
 .questionBackground {
     background-color: #fef4e8;
     height: 100vh;
   }
 
 .inputGroup {
-  border: solid 20px #6d9c37;
+  border: solid 20px #2594d5;
   outline: rgb(156, 156, 156) 1px solid;
   border-radius: 10px;
-  background-color: #6d9c37;
+  background-color: #2594d5;
 }
 
 .fade-move,

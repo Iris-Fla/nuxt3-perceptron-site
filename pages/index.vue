@@ -62,7 +62,7 @@ const showData = () => {
   <div class="defaultBackground">
     <Container>
       <h2>{{ userData.titleList[0].do }}</h2>
-      <Alert shadow theme="light">
+      <Alert theme="light" class="basicShadow">
         <BInputGroup margin="b-2" size="lg">
           <BFormFloating>
             <BFormInput
@@ -76,15 +76,6 @@ const showData = () => {
             <BFormLabel for="floatingInput">だれが?</BFormLabel>
           </BFormFloating>
           <BInputGroupText><b>が</b></BInputGroupText>
-          <!-- <BFormFloating>
-          <BFormInput
-            type="text"
-            placeholder="~を ~で ~に"
-            aria-label="Weight"
-            v-model="userData.titleList[0].where"
-          />
-          <BFormLabel for="floatingInput">何を,どこで,誰に</BFormLabel>
-        </BFormFloating> -->
         </BInputGroup>
         <BInputGroup margin="b-2">
           <BInputGroupText><b>出来事</b></BInputGroupText>
@@ -106,7 +97,7 @@ const showData = () => {
         <b-button
           margin="t-2"
           size="lg"
-          button="success"
+          button="primary"
           @click="MakeTaskData()"
           class="w-100"
         >
@@ -141,27 +132,6 @@ const showData = () => {
           </BInputGroup>
         </div>
       </TransitionGroup>
-      <!-- <transition-group name="fade">
-      <Alert margin="s-5 e-5" class="alert-style" shadow theme="primary" v-for="list in userData.dataList" :key="list.id">
-        <Row align-items="center">
-          <Col col="10">
-          <BInputGroup>
-            <BInputGroupText id="BInputGroup" class="d-none d-md-block">
-            タイトル
-            </BInputGroupText>
-            <BFormInput type="text" placeholder="タイトルを入力" aria-label="Title" v-model="list.id" />
-            <BInputGroupText class="d-none d-md-block">重み</BInputGroupText>
-            <BFormInput type="text" placeholder="重みを入力" aria-label="Weight" v-model="list.weight" />
-          </BInputGroup>
-          </Col>
-          <Col col="1">
-          <b-button button="danger" @click="DeleteTaskData(list.id)">
-            <BIcon icon="bi:dash-circle" />
-          </b-button>
-          </Col>
-        </Row>
-      </Alert>
-    </transition-group> -->
       <b-button button="primary" @click="playQuestion">実行す</b-button>
       <h1>たまざらし</h1>
       <NuxtLink to="/question">Go to question</NuxtLink>
