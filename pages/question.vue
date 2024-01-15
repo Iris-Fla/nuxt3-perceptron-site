@@ -7,18 +7,28 @@ const countQuestion = ref(userData.value.dataList.length);
 
 const nowQuestion = ref(0);
 
-const ans = ref(0);
+const ans = ref(userData.value.biasData);
+
+const showStatus = ref("default");
 
 // 画像のアニメーション(フェード)
 const animated_image = () => {
   const img = document.querySelector(".animated_img");
-  img.classList.add("animated");
+  if (img) {
+    img.classList.add("animated");
+  }
   setTimeout(() => {
-    img.classList.remove("animated");
+    if (img) {
+      img.classList.remove("animated");
+    }
   }, 1000);
 };
-
-const showStatus = ref("default");
+const reset = () => {
+  animated_image();
+  nowQuestion.value = 0;
+  ans.value = 0;
+  showStatus.value = "default";
+};
 
 const nextQuestion = () => {
   ans.value += userData.value.dataList[nowQuestion.value].weight * 1;
@@ -49,7 +59,6 @@ const backButton = () => {
 
 const End = () => {
   alert("終了");
-  ans.value += userData.value.biasData;
   if (ans.value < 0) {
     alert(
       userData.value.titleList[0].name +
@@ -65,25 +74,33 @@ const End = () => {
         "らしいです"
     );
   }
+  showStatus.value = "end";
 };
 </script>
 <template>
   <div class="questionBackground">
     <Container>
+      <div>でばっぐ {{ userData.debugMode }}</div>
       <div>今の問題 {{ nowQuestion }}</div>
       <div>問題数 {{ countQuestion }}</div>
+      <div>問題数 {{ ans }}</div>
       <b-a button="primary" href="/"
         ><BIcon icon="bi:circle" />ホームに戻る</b-a
       >
       <b-button button="primary" @click="backButton"
         ><BIcon icon="bi:circle" />一つ戻る</b-button
       >
+      <b-button button="primary" @click="reset"
+        ><BIcon icon="bi:circle" />リセット</b-button
+      >
       <Card
         class="questionCard text-center animated_img basicShadow"
         margin="4"
-        v-if="(showStatus = 'default')"
+        v-if="(showStatus === 'default')"
       >
-      <CardText margin="t-3">進行状況:{{ nowQuestion }}/{{ countQuestion }}</CardText>
+      <CardText margin="t-3"
+          >進行状況:{{ nowQuestion }}/{{ countQuestion }}</CardText
+        >
         <div class="progress-bar">
           <div
             class="progress-bar-item"
@@ -92,9 +109,21 @@ const End = () => {
             :class="{ active: index < nowQuestion }"
           ></div>
         </div>
-        <CardTitle margin="t-4"
+        <Row>
+          <Col>
+            <p v-if="userData.debugMode">
+              現在のスコア:{{ ans }}
+            </p>
+          </Col>
+          <Col>
+            <p v-if="userData.debugMode">
+              要素の影響度:{{ userData.dataList[nowQuestion].weight }}
+            </p>
+          </Col>
+        </Row>
+        <CardTitle margin="t-3"
           ><h2>
-            ずんだもんは {{ userData.dataList[nowQuestion].title }} ?
+            {{ userData.dataList[nowQuestion].title }} ?
           </h2></CardTitle
         >
         <Row>
@@ -118,6 +147,13 @@ const End = () => {
           </Col>
         </Row>
       </Card>
+      <Card
+        class="questionCard text-center animated_img basicShadow"
+        margin="4"
+        v-if="(showStatus === 'end')"
+      >
+      <Card>モダンな内装とゴシックの着物の概念</Card>
+      </Card>
     </Container>
   </div>
 </template>
@@ -127,7 +163,7 @@ const End = () => {
   height: 20px;
   flex-direction: row;
   border-radius: 10px;
-  margin:0px 20px;
+  margin: 0px 20px;
 }
 
 .progress-bar-item {
@@ -148,8 +184,8 @@ const End = () => {
 }
 
 .bigButton {
-  width: 100px; /* ボタンの幅 */
-  height: 50px; /* ボタンの高さ */
+  width: 80%; /* ボタンの幅 */
+  height: 100px; /* ボタンの高さ */
   font-size: 20px; /* テキストのサイズ */
 }
 

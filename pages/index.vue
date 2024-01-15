@@ -31,14 +31,16 @@ const MakeTaskData = () => {
 const playQuestion = () => {
   if (userData.value.dataList.length < 3) {
     alertMessage.value = "データの数は3個以上必要です。";
-  } else if (userData.value.dataList.some(item => item.title.trim() === '')) {
+  } else if (userData.value.dataList.some((item) => item.title.trim() === "")) {
     alertMessage.value = "条件が空のデータが存在します。";
-  } else if (userData.value.dataList.some(item => item.weight == null)) {
+  } else if (userData.value.dataList.some((item) => item.weight == null)) {
     alertMessage.value = "重みが空のデータが存在します。";
-  } else if (isNaN(userData.value.biasData) || userData.value.titleList[0].do.trim() === '') {
-  alertMessage.value = "タイトル欄に空のデータが存在します。";
-  }
-  else {
+  } else if (
+    isNaN(userData.value.biasData) ||
+    userData.value.titleList[0].do.trim() === ""
+  ) {
+    alertMessage.value = "タイトル欄に空のデータが存在します。";
+  } else {
     navigateTo("/question");
   }
 };
@@ -61,7 +63,7 @@ const showData = () => {
 <template>
   <div class="defaultBackground">
     <Container>
-      <h2>{{ userData.titleList[0].do }}</h2>
+      <h1>もちもち でばっぐ {{ userData.debugMode }}</h1>
       <Alert theme="light" class="basicShadow">
         <BInputGroup margin="b-2" size="lg">
           <BFormFloating>
@@ -94,6 +96,10 @@ const showData = () => {
             v-model="userData.biasData"
           />
         </BInputGroup>
+        <BFormCheck switch>
+          <BFormCheckLabel>検証モード(要素の影響度と結果を表示します)</BFormCheckLabel>
+          <BFormCheckInput v-model="userData.debugMode" />
+        </BFormCheck>
         <b-button
           margin="t-2"
           size="lg"

@@ -9,5 +9,6 @@ export const useData = () => {
             { name:'ずんだもん',do:'寝る'},
         ],
         biasData: -4,
+        debugMode: false,
     }))
 }
