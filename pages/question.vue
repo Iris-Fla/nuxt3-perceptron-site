@@ -7,12 +7,12 @@ const countQuestion = ref(userData.value.dataList.length);
 
 const nowQuestion = ref(0);
 
-const ans = ref(userData.value.biasData);
+const ans = ref(0);
 
 const showStatus = ref("default");
 
 // 画像のアニメーション(フェード)
-const animated_image = () => {
+const animated_image = async () => {
   const img = document.querySelector(".animated_img");
   if (img) {
     img.classList.add("animated");
@@ -21,7 +21,7 @@ const animated_image = () => {
     if (img) {
       img.classList.remove("animated");
     }
-  }, 1000);
+  }, 800);
 };
 const reset = () => {
   animated_image();
@@ -30,51 +30,47 @@ const reset = () => {
   showStatus.value = "default";
 };
 
-const nextQuestion = () => {
+const nextQuestion = async () => {
   ans.value += userData.value.dataList[nowQuestion.value].weight * 1;
   if (nowQuestion.value === countQuestion.value - 1) {
     End();
   }
   animated_image();
+  await new Promise((resolve) => setTimeout(resolve, 800));
   nowQuestion.value++;
 };
 
-const nextQuestionX = () => {
+const nextQuestionX = async () => {
   if (nowQuestion.value === countQuestion.value - 1) {
     End();
   }
   animated_image();
+  await new Promise((resolve) => setTimeout(resolve, 800));
   nowQuestion.value++;
 };
 
-const backButton = () => {
+const backButton = async () => {
   if (nowQuestion.value === 0) {
     alert("これ以上戻れないのだ");
   } else {
     animated_image();
+    await new Promise((resolve) => setTimeout(resolve, 800));
     nowQuestion.value--;
     ans.value -= userData.value.dataList[nowQuestion.value].weight * 1;
   }
 };
 
-const End = () => {
-  alert("終了");
+const End = async () => {
+  ans.value += userData.value.biasData;
   if (ans.value < 0) {
-    alert(
-      userData.value.titleList[0].name +
-        "は" +
-        userData.value.titleList[0].do +
-        "のはやめるらしいです"
-    );
+    userData.value.resulttext = userData.value.titleList[0].name + "は" + userData.value.titleList[0].do + "のはやめるらしいです";
   } else {
-    alert(
-      userData.value.titleList[0].name +
-        "は" +
-        userData.value.titleList[0].do +
-        "らしいです"
-    );
+    userData.value.resulttext = userData.value.titleList[0].name + "は" + userData.value.titleList[0].do + "らしいです";
   }
   showStatus.value = "end";
+  animated_image();
+  await new Promise((resolve) => setTimeout(resolve, 800));
+
 };
 </script>
 <template>
@@ -83,76 +79,63 @@ const End = () => {
       <div>でばっぐ {{ userData.debugMode }}</div>
       <div>今の問題 {{ nowQuestion }}</div>
       <div>問題数 {{ countQuestion }}</div>
-      <div>問題数 {{ ans }}</div>
-      <b-a button="primary" href="/"
-        ><BIcon icon="bi:circle" />ホームに戻る</b-a
-      >
-      <b-button button="primary" @click="backButton"
-        ><BIcon icon="bi:circle" />一つ戻る</b-button
-      >
-      <b-button button="primary" @click="reset"
-        ><BIcon icon="bi:circle" />リセット</b-button
-      >
-      <Card
-        class="questionCard text-center animated_img basicShadow"
-        margin="4"
-        v-if="(showStatus === 'default')"
-      >
-      <CardText margin="t-3"
-          >進行状況:{{ nowQuestion }}/{{ countQuestion }}</CardText
-        >
+      <div>問題数 {{ ans + userData.biasData }}</div>
+      <Card class="questionCard text-center animated_img basicShadow" margin="4" v-if="(showStatus === 'default')">
+        <Row justify-content="between">
+          <Col col="auto">
+          <b-a button="primary" href="/">
+            <BIcon margin="e-1" icon="bi:wrench-adjustable" />作り直す
+          </b-a>
+          </Col>
+          <Col col="auto">
+          <ButtonGroup>
+            <b-button button="success" @click="backButton">
+              <BIcon icon="bi:circle" />一つ戻る
+            </b-button>
+            <b-button button="warning" @click="reset">
+              <BIcon icon="bi:circle" />リセット
+            </b-button>
+          </ButtonGroup>
+          </Col>
+        </Row>
+
+        <CardText margin="t-3">進行状況:{{ nowQuestion }}/{{ countQuestion }}</CardText>
         <div class="progress-bar">
-          <div
-            class="progress-bar-item"
-            v-for="(item, index) in userData.dataList"
-            :key="index"
-            :class="{ active: index < nowQuestion }"
-          ></div>
+          <div class="progress-bar-item" v-for="(item, index) in userData.dataList" :key="index"
+            :class="{ active: index < nowQuestion }"></div>
         </div>
         <Row>
           <Col>
-            <p v-if="userData.debugMode">
-              現在のスコア:{{ ans }}
-            </p>
+          <p v-if="userData.debugMode">
+            現在のスコア:{{ ans + userData.biasData }}
+          </p>
           </Col>
           <Col>
-            <p v-if="userData.debugMode">
-              要素の影響度:{{ userData.dataList[nowQuestion].weight }}
-            </p>
+          <p v-if="userData.debugMode">
+            要素の影響度:{{ userData.dataList[nowQuestion].weight }}
+          </p>
           </Col>
         </Row>
-        <CardTitle margin="t-3"
-          ><h2>
+        <CardTitle margin="t-3">
+          <h2>
             {{ userData.dataList[nowQuestion].title }} ?
-          </h2></CardTitle
-        >
+          </h2>
+        </CardTitle>
         <Row>
           <Col>
-            <b-button
-              class="bigButton"
-              margin="3"
-              button="primary"
-              @click="nextQuestion"
-              ><BIcon icon="bi:circle"
-            /></b-button>
+          <b-button class="bigButton" margin="3" button="primary" @click="nextQuestion">
+            <BIcon icon="bi:circle" />
+          </b-button>
           </Col>
           <Col>
-            <b-button
-              class="bigButton"
-              margin="3"
-              button="danger"
-              @click="nextQuestionX"
-              ><BIcon icon="bi:x-circle"
-            /></b-button>
+          <b-button class="bigButton" margin="3" button="danger" @click="nextQuestionX">
+            <BIcon icon="bi:x-circle" />
+          </b-button>
           </Col>
         </Row>
       </Card>
-      <Card
-        class="questionCard text-center animated_img basicShadow"
-        margin="4"
-        v-if="(showStatus === 'end')"
-      >
-      <Card>モダンな内装とゴシックの着物の概念</Card>
+      <Card class="questionCard text-center animated_img basicShadow" margin="4" v-if="(showStatus === 'end')">
+        <CardText>{{ userData.resulttext }}</CardText>
       </Card>
     </Container>
   </div>
@@ -177,22 +160,29 @@ const End = () => {
   background-color: #4caf50;
 }
 
-.animated {
-  animation: fadeInOut 1s infinite;
+.animated_img {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
 
-  will-change: transform;
+.animated_img.animated {
+  opacity: 0;
 }
 
 .bigButton {
-  width: 80%; /* ボタンの幅 */
-  height: 100px; /* ボタンの高さ */
-  font-size: 20px; /* テキストのサイズ */
+  width: 80%;
+  /* ボタンの幅 */
+  height: 100px;
+  /* ボタンの高さ */
+  font-size: 20px;
+  /* テキストのサイズ */
 }
 
 @keyframes fadeInOut {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

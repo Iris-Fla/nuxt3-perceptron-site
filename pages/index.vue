@@ -93,11 +93,11 @@ const showData = () => {
             type="number"
             placeholder="バイアスを入力してください"
             aria-label="Don't"
-            v-model="userData.biasData"
+            v-model.number="userData.biasData"
           />
         </BInputGroup>
         <BFormCheck switch>
-          <BFormCheckLabel>検証モード(要素の影響度と結果を表示します)</BFormCheckLabel>
+          <BFormCheckLabel>検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel>
           <BFormCheckInput v-model="userData.debugMode" />
         </BFormCheck>
         <b-button
@@ -127,7 +127,7 @@ const showData = () => {
                 type="number"
                 placeholder="重み(数字)"
                 aria-label="Weight"
-                v-model="list.weight"
+                v-model.number="list.weight"
               />
               <BFormLabel for="floatingInput">重み(数字)</BFormLabel>
             </BFormFloating>

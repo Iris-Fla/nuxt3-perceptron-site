@@ -10,5 +10,6 @@ export const useData = () => {
         ],
         biasData: -4,
         debugMode: false,
+        resulttext: 'これは見えないはずだよ',
     }))
 }
