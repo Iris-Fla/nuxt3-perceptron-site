@@ -63,7 +63,13 @@ const loadData = (event: any) => {
     reader.onload = function (e) {
       try {
         const data = JSON.parse((e.target?.result as string) || "");
-        userData.value.dataList = data;
+        if (data.dataList && data.titleList && data.biasData) {
+          userData.value.dataList = data.dataList;
+          userData.value.titleList = data.titleList;
+          userData.value.biasData = data.biasData;
+        } else {
+          console.error("Invalid data structure");
+        }
       } catch (error) {
         console.error("Invalid JSON format");
       }
@@ -79,6 +85,9 @@ const showData = () => {
 <template>
   <div class="defaultBackground">
     <Container>
+      <BInputGroup margin="b-3">
+        <BFormFile id="BInputGroupFile01" @change="loadData" accept=".json" />
+      </BInputGroup>
       <input type="file" @change="loadData" accept=".json" />
       <h1>もちもち でばっぐ {{ userData.debugMode }}</h1>
       <Alert theme="light" class="basicShadow">
@@ -158,8 +167,6 @@ const showData = () => {
         </div>
       </TransitionGroup>
       <b-button button="primary" @click="playQuestion">実行す</b-button>
-      <h1>たまざらし</h1>
-      <NuxtLink to="/question">Go to question</NuxtLink>
       <div
         class="position-fixed bottom-0 end-0 p-3"
         style="z-index: 11"

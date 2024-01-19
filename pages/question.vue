@@ -74,12 +74,17 @@ const End = async () => {
 };
 
 const downloadData = () => {
-  const dataStr = JSON.stringify(userData.value.dataList);
+    const dataToDownload = {
+    dataList: userData.value.dataList,
+    titleList: userData.value.titleList,
+    biasData: userData.value.biasData,
+  };
+  const dataStr = JSON.stringify(dataToDownload);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'userData.json';
+  link.download = userData.value.titleList[0].do +'.json';
   link.click();
   URL.revokeObjectURL(url);
 };
