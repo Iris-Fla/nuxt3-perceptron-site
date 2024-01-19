@@ -56,6 +56,22 @@ const maxId = () => {
   return maxId;
 };
 
+const loadData = (event: any) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const data = JSON.parse((e.target?.result as string) || "");
+        userData.value.dataList = data;
+      } catch (error) {
+        console.error("Invalid JSON format");
+      }
+    };
+    reader.readAsText(file);
+  }
+};
+
 const showData = () => {
   console.log(userData.value.dataList);
 };
@@ -63,6 +79,7 @@ const showData = () => {
 <template>
   <div class="defaultBackground">
     <Container>
+      <input type="file" @change="loadData" accept=".json" />
       <h1>もちもち でばっぐ {{ userData.debugMode }}</h1>
       <Alert theme="light" class="basicShadow">
         <BInputGroup margin="b-2" size="lg">
@@ -97,7 +114,9 @@ const showData = () => {
           />
         </BInputGroup>
         <BFormCheck switch>
-          <BFormCheckLabel>検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel>
+          <BFormCheckLabel
+            >検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel
+          >
           <BFormCheckInput v-model="userData.debugMode" />
         </BFormCheck>
         <b-button

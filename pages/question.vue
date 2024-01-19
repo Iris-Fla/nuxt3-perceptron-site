@@ -67,15 +67,30 @@ const End = async () => {
   } else {
     userData.value.resulttext = userData.value.titleList[0].name + "は" + userData.value.titleList[0].do + "らしいです";
   }
-  showStatus.value = "end";
   animated_image();
+  showStatus.value = "end";
   await new Promise((resolve) => setTimeout(resolve, 800));
 
 };
+
+const downloadData = () => {
+  const dataStr = JSON.stringify(userData.value.dataList);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'userData.json';
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
 </script>
 <template>
   <div class="questionBackground">
     <Container>
+        <b-button class="bigButton" margin="3" button="primary" @click="downloadData">
+            <BIcon icon="bi:circle" />
+          </b-button>
       <div>でばっぐ {{ userData.debugMode }}</div>
       <div>今の問題 {{ nowQuestion }}</div>
       <div>問題数 {{ countQuestion }}</div>
@@ -90,10 +105,10 @@ const End = async () => {
           <Col col="auto">
           <ButtonGroup>
             <b-button button="success" @click="backButton">
-              <BIcon icon="bi:circle" />一つ戻る
+              <BIcon margin="e-1" icon="bi:chevron-double-left" />一つ戻る
             </b-button>
             <b-button button="warning" @click="reset">
-              <BIcon icon="bi:circle" />リセット
+              <BIcon margin="e-1" icon="bi:arrow-counterclockwise" />やりなおす
             </b-button>
           </ButtonGroup>
           </Col>
@@ -135,7 +150,22 @@ const End = async () => {
         </Row>
       </Card>
       <Card class="questionCard text-center animated_img basicShadow" margin="4" v-if="(showStatus === 'end')">
-        <CardText>{{ userData.resulttext }}</CardText>
+        <h1>↓結果↓</h1>
+        <h3>{{ userData.resulttext }}</h3>
+        <Row>
+          <Col col="6">
+          <b-a button="primary" href="/">
+            <BIcon margin="e-1" icon="bi:wrench-adjustable" />作り直す
+          </b-a>
+          </Col>
+          <Col col="6">
+          <ButtonGroup>
+            <b-button button="warning" @click="reset">
+              <BIcon icon="bi:circle" />もう一度
+            </b-button>
+          </ButtonGroup>
+          </Col>
+        </Row>
       </Card>
     </Container>
   </div>
