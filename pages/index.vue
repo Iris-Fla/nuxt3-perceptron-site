@@ -78,6 +78,23 @@ const loadData = (event: any) => {
   }
 };
 
+const downloadData = () => {
+    const dataToDownload = {
+    dataList: userData.value.dataList,
+    titleList: userData.value.titleList,
+    biasData: userData.value.biasData,
+  };
+  const dataStr = JSON.stringify(dataToDownload);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = userData.value.titleList[0].do +'.json';
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+
 const showData = () => {
   console.log(userData.value.dataList);
 };
@@ -85,11 +102,16 @@ const showData = () => {
 <template>
   <div class="defaultBackground">
     <Container>
-      <BInputGroup margin="b-3">
-        <BFormFile id="BInputGroupFile01" @change="loadData" accept=".json" />
-      </BInputGroup>
-      <input type="file" @change="loadData" accept=".json" />
-      <h1>もちもち でばっぐ {{ userData.debugMode }}</h1>
+      <h1 class="text-center">パーセプトロンを学ぶのだ</h1>
+      <Alert theme="info" class="basicShadow">
+        データの読み込み,データの保存
+        <BInputGroup>
+          <BFormFile id="BInputGroupFile01" @change="loadData" accept=".json" />
+        </BInputGroup>
+        <b-button button="primary" class="w-30" @click="downloadData"
+          >データを出力する</b-button
+        >
+      </Alert>
       <Alert theme="light" class="basicShadow">
         <BInputGroup margin="b-2" size="lg">
           <BFormFloating>
@@ -122,12 +144,6 @@ const showData = () => {
             v-model.number="userData.biasData"
           />
         </BInputGroup>
-        <BFormCheck switch>
-          <BFormCheckLabel
-            >検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel
-          >
-          <BFormCheckInput v-model="userData.debugMode" />
-        </BFormCheck>
         <b-button
           margin="t-2"
           size="lg"
@@ -165,8 +181,22 @@ const showData = () => {
             </b-button>
           </BInputGroup>
         </div>
+        <Alert theme="light" class="basicShadow">
+          <BFormCheck switch>
+            <BFormCheckLabel
+              >検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel
+            >
+            <BFormCheckInput v-model="userData.debugMode" />
+          </BFormCheck>
+          <b-button
+            button="primary"
+            margin="t-2"
+            class="w-100"
+            @click="playQuestion"
+            >実行する～！</b-button
+          >
+        </Alert>
       </TransitionGroup>
-      <b-button button="primary" @click="playQuestion">実行す</b-button>
       <div
         class="position-fixed bottom-0 end-0 p-3"
         style="z-index: 11"
