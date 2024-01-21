@@ -24,6 +24,7 @@ const MakeTaskData = () => {
       id: maxId() + 1,
       title: "",
       weight: Number(),
+      checked: false,
     });
   }
 };
@@ -41,8 +42,18 @@ const playQuestion = () => {
   ) {
     alertMessage.value = "タイトル欄に空のデータが存在します。";
   } else {
-    navigateTo("/question");
+    checkedfalse();
+    if (userData.value.debugMode === true) {
+      navigateTo("/question");
+    } else {
+      navigateTo("/debug");
+    }
   }
+};
+const checkedfalse = () => {
+  userData.value.dataList.forEach((item: any) => {
+    item.checked = false;
+  });
 };
 
 // 現在のIDの最大値を取得
@@ -79,6 +90,7 @@ const loadData = (event: any) => {
 };
 
 const downloadData = () => {
+  checkedfalse();
   const dataToDownload = {
     dataList: userData.value.dataList,
     titleList: userData.value.titleList,
@@ -121,7 +133,7 @@ const showData = () => {
         src="/text-1.png"
         alt="することとバイアスを入力するのだ"
       />
-        <!-- <BInputGroup margin="b-2" size="lg">
+      <!-- <BInputGroup margin="b-2" size="lg">
           <BFormFloating>
             <BFormInput
               type="text"
@@ -135,23 +147,23 @@ const showData = () => {
           </BFormFloating>
           <BInputGroupText><b>が</b></BInputGroupText>
         </BInputGroup> -->
-        <BInputGroup margin="b-4" class="">
-          <BInputGroupText><b>すること</b></BInputGroupText>
-          <BFormInput
-            type="text"
-            placeholder="○○する"
-            aria-label="Do"
-            v-model="userData.titleList[0].do"
-            margin="e-4"
-          />
-          <BInputGroupText><b>バイアス</b></BInputGroupText>
-          <BFormInput
-            type="number"
-            placeholder="バイアスを入力してください"
-            aria-label="Don't"
-            v-model.number="userData.biasData"
-          />
-        </BInputGroup>
+      <BInputGroup margin="b-4" class="">
+        <BInputGroupText><b>すること</b></BInputGroupText>
+        <BFormInput
+          type="text"
+          placeholder="○○する"
+          aria-label="Do"
+          v-model="userData.titleList[0].do"
+          margin="e-4"
+        />
+        <BInputGroupText><b>バイアス</b></BInputGroupText>
+        <BFormInput
+          type="number"
+          placeholder="バイアスを入力してください"
+          aria-label="Don't"
+          v-model.number="userData.biasData"
+        />
+      </BInputGroup>
       <img
         class="text-image"
         src="/text-2.png"
@@ -164,7 +176,7 @@ const showData = () => {
         @click="MakeTaskData()"
         class="w-100 basicButton"
       >
-        要素の追加<BIcon icon="bi:plus-circle" />
+        条件の追加<BIcon icon="bi:plus-circle" />
       </b-button>
       <TransitionGroup name="fade" tag="div">
         <div v-for="list in userData.dataList" :key="list.id">
@@ -176,7 +188,7 @@ const showData = () => {
                 aria-label="Title"
                 v-model="list.title"
               />
-              <BFormLabel for="floatingInput">出来事</BFormLabel>
+              <BFormLabel for="floatingInput">条件</BFormLabel>
             </BFormFloating>
             <BFormFloating>
               <BFormInput
@@ -195,9 +207,7 @@ const showData = () => {
         </div>
         <Alert theme="light" class="basicShadow">
           <BFormCheck switch>
-            <BFormCheckLabel
-              >検証モード(要素の影響度と結果を常に表示します)</BFormCheckLabel
-            >
+            <BFormCheckLabel>遊びモード(○×ゲーム風になります)</BFormCheckLabel>
             <BFormCheckInput v-model="userData.debugMode" />
           </BFormCheck>
           <b-button
@@ -205,7 +215,7 @@ const showData = () => {
             margin="t-2"
             class="w-100 basicButton"
             @click="playQuestion"
-            >実行する～！</b-button
+            >検証する～！</b-button
           >
         </Alert>
       </TransitionGroup>

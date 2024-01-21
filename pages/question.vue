@@ -21,7 +21,7 @@ const animated_image = async () => {
     if (img) {
       img.classList.remove("animated");
     }
-  }, 800);
+  }, 300);
 };
 const reset = () => {
   animated_image();
@@ -53,10 +53,10 @@ const backButton = async () => {
   if (nowQuestion.value === 0) {
     alert("これ以上戻れないのだ");
   } else {
-    animated_image();
-    await new Promise((resolve) => setTimeout(resolve, 800));
     nowQuestion.value--;
     ans.value -= userData.value.dataList[nowQuestion.value].weight * 1;
+    animated_image();
+    await new Promise((resolve) => setTimeout(resolve, 800));
   }
 };
 
@@ -64,30 +64,20 @@ const End = async () => {
   ans.value += userData.value.biasData;
   if (ans.value < 0) {
     userData.value.resulttext =
-      "今日は" +
-      userData.value.titleList[0].do +
-      "のはやめるらしいです";
+      userData.value.titleList[0].do + "のはやめるのだ";
   } else {
-    userData.value.resulttext =
-      "今日は" +
-      userData.value.titleList[0].do +
-      "らしいです";
+    userData.value.resulttext = userData.value.titleList[0].do + "のだ";
   }
-  animated_image();
+  showStatus.value = "loading";
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   showStatus.value = "end";
-  await new Promise((resolve) => setTimeout(resolve, 800));
 };
 </script>
 <template>
   <div class="questionBackground">
     <Container>
-      <div>でばっぐ {{ userData.debugMode }}</div>
-      <div>今の問題 {{ nowQuestion }}</div>
-      <div>問題数 {{ countQuestion }}</div>
-      <div>問題数 {{ ans + userData.biasData }}</div>
       <Card
         class="questionCard text-center animated_img basicShadow center-card"
-        margin="4"
         v-if="showStatus === 'default'"
       >
         <Row justify-content="between">
@@ -122,18 +112,6 @@ const End = async () => {
             :class="{ active: index < nowQuestion }"
           ></div>
         </div>
-        <Row>
-          <Col>
-            <p v-if="userData.debugMode">
-              現在のスコア:{{ ans + userData.biasData }}
-            </p>
-          </Col>
-          <Col>
-            <p v-if="userData.debugMode">
-              要素の影響度:{{ userData.dataList[nowQuestion].weight }}
-            </p>
-          </Col>
-        </Row>
         <CardTitle margin="t-3">
           <h2 class="Mochi">{{ userData.dataList[nowQuestion].title }} ?</h2>
         </CardTitle>
@@ -160,23 +138,31 @@ const End = async () => {
           </Col>
         </Row>
       </Card>
-      <Card
-        class="questionCard text-center animated_img basicShadow"
-        margin="4"
-        v-if="showStatus === 'end'"
-      >
-        <h1>↓結果↓</h1>
-        <h3 class="Mochi">{{ userData.resulttext }}</h3>
-        <ButtonGroup>
-          <b-a button="primary" href="/" margin="s-2 b-2">
-            <BIcon margin="e-1" icon="bi:wrench-adjustable" />つくりなおす
-          </b-a>
-          <b-button margin="e-2 b-2" button="success" @click="reset">
-            <BIcon icon="bi:arrow-counterclockwise" />
-            やりなおす
-          </b-button>
-        </ButtonGroup>
-      </Card>
+      <Transition name="card">
+        <div v-if="showStatus === 'end'">
+          <Card
+            class="questionCard text-center animated_img basicShadow center-card"
+            margin="4"
+          >
+            <h1>↓結果↓</h1>
+            <h3 class="Mochi">{{ userData.resulttext }}</h3>
+            <ButtonGroup>
+              <b-a button="primary" href="/" margin="s-2 b-2">
+                <BIcon margin="e-1" icon="bi:wrench-adjustable" />つくりなおす
+              </b-a>
+              <b-button margin="e-2 b-2" button="success" @click="reset">
+                <BIcon icon="bi:arrow-counterclockwise" />
+                やりなおす
+              </b-button>
+            </ButtonGroup>
+          </Card>
+        </div>
+      </Transition>
+      <Transition>
+        <div v-if="showStatus === 'loading'" class="spinner-container">
+          <Spinner text-color="light" margin="5"></Spinner>
+        </div>
+      </Transition>
     </Container>
   </div>
 </template>
@@ -202,7 +188,7 @@ const End = async () => {
 
 .center-card {
   position: fixed;
-  width: 60%;
+  width: 50%;
   height: auto;
   top: 40%;
   left: 50%;
@@ -216,6 +202,7 @@ const End = async () => {
 
 .animated_img.animated {
   opacity: 0;
+  transition: opacity 0s;
 }
 
 .bigButton {
@@ -225,6 +212,28 @@ const End = async () => {
   /* ボタンの高さ */
   font-size: 20px;
   /* テキストのサイズ */
+}
+
+.card-enter-active,
+.card-leave-active {
+  transition: opacity 0.3s;
+}
+
+.card-enter-from,
+.card-leave-to {
+  opacity: 0;
+}
+
+.card-leave-active {
+  position: absolute;
+}
+
+.spinner-container {
+  position: fixed;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes fadeInOut {
