@@ -17,9 +17,9 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@nuxt/image": "^1.3.0",
     "@vueuse/nuxt": "^10.7.0",
     "gsap": "^3.12.4",
+    "ipx": "^3.0.0",
     "nuxt-icon": "^0.6.7",
     "usebootstrap": "^0.2.1",
     "usebootstrap-docs": "^0.0.11"

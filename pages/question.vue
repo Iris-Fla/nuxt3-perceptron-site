@@ -64,14 +64,12 @@ const End = async () => {
   ans.value += userData.value.biasData;
   if (ans.value < 0) {
     userData.value.resulttext =
-      userData.value.titleList[0].name +
-      "は" +
+      "今日は" +
       userData.value.titleList[0].do +
       "のはやめるらしいです";
   } else {
     userData.value.resulttext =
-      userData.value.titleList[0].name +
-      "は" +
+      "今日は" +
       userData.value.titleList[0].do +
       "らしいです";
   }
@@ -88,7 +86,7 @@ const End = async () => {
       <div>問題数 {{ countQuestion }}</div>
       <div>問題数 {{ ans + userData.biasData }}</div>
       <Card
-        class="questionCard text-center animated_img basicShadow"
+        class="questionCard text-center animated_img basicShadow center-card"
         margin="4"
         v-if="showStatus === 'default'"
       >
@@ -137,7 +135,7 @@ const End = async () => {
           </Col>
         </Row>
         <CardTitle margin="t-3">
-          <h2>{{ userData.dataList[nowQuestion].title }} ?</h2>
+          <h2 class="Mochi">{{ userData.dataList[nowQuestion].title }} ?</h2>
         </CardTitle>
         <Row>
           <Col>
@@ -168,7 +166,7 @@ const End = async () => {
         v-if="showStatus === 'end'"
       >
         <h1>↓結果↓</h1>
-        <h3>{{ userData.resulttext }}</h3>
+        <h3 class="Mochi">{{ userData.resulttext }}</h3>
         <ButtonGroup>
           <b-a button="primary" href="/" margin="s-2 b-2">
             <BIcon margin="e-1" icon="bi:wrench-adjustable" />つくりなおす
@@ -200,6 +198,15 @@ const End = async () => {
 
 .progress-bar-item.active {
   background-color: #4caf50;
+}
+
+.center-card {
+  position: fixed;
+  width: 60%;
+  height: auto;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .animated_img {

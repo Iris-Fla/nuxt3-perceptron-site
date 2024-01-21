@@ -28,7 +28,7 @@ export default defineNuxtConfig({
             {
               rel: "stylesheet",
           // TODO: ここに先ほど控えたhrefの中身を記載
-              href: "https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap",
+              href: "https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=Mochiy+Pop+One&display=swap",
               crossorigin: "",
             },
           ],

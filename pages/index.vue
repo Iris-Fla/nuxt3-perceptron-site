@@ -79,21 +79,20 @@ const loadData = (event: any) => {
 };
 
 const downloadData = () => {
-    const dataToDownload = {
+  const dataToDownload = {
     dataList: userData.value.dataList,
     titleList: userData.value.titleList,
     biasData: userData.value.biasData,
   };
   const dataStr = JSON.stringify(dataToDownload);
-  const blob = new Blob([dataStr], { type: 'application/json' });
+  const blob = new Blob([dataStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.download = userData.value.titleList[0].do +'.json';
+  link.download = userData.value.titleList[0].do + ".json";
   link.click();
   URL.revokeObjectURL(url);
 };
-
 
 const showData = () => {
   console.log(userData.value.dataList);
@@ -102,18 +101,27 @@ const showData = () => {
 <template>
   <div class="defaultBackground">
     <Container>
-      <h1 class="text-center">パーセプトロンを学ぶのだ</h1>
-      <Alert theme="info" class="basicShadow">
+      <header>
+        <img class="center-image" src="/Header.png" alt="Logo" />
+      </header>
+      <Alert theme="light" class="basicShadow">
         データの読み込み,データの保存
         <BInputGroup>
           <BFormFile id="BInputGroupFile01" @change="loadData" accept=".json" />
         </BInputGroup>
-        <b-button button="primary" class="w-30" @click="downloadData"
-          >データを出力する</b-button
-        >
+        <b-button
+          button="primary"
+          class="w-30 basicButton"
+          @click="downloadData"
+          >データを出力する<BIcon margin="s-1" icon="bi:file-earmark-arrow-up"
+        /></b-button>
       </Alert>
-      <Alert theme="light" class="basicShadow">
-        <BInputGroup margin="b-2" size="lg">
+      <img
+        class="text-image"
+        src="/text-1.png"
+        alt="することとバイアスを入力するのだ"
+      />
+        <!-- <BInputGroup margin="b-2" size="lg">
           <BFormFloating>
             <BFormInput
               type="text"
@@ -126,9 +134,9 @@ const showData = () => {
             <BFormLabel for="floatingInput">だれが?</BFormLabel>
           </BFormFloating>
           <BInputGroupText><b>が</b></BInputGroupText>
-        </BInputGroup>
-        <BInputGroup margin="b-2">
-          <BInputGroupText><b>出来事</b></BInputGroupText>
+        </BInputGroup> -->
+        <BInputGroup margin="b-4" class="">
+          <BInputGroupText><b>すること</b></BInputGroupText>
           <BFormInput
             type="text"
             placeholder="○○する"
@@ -144,16 +152,20 @@ const showData = () => {
             v-model.number="userData.biasData"
           />
         </BInputGroup>
-        <b-button
-          margin="t-2"
-          size="lg"
-          button="primary"
-          @click="MakeTaskData()"
-          class="w-100"
-        >
-          要素の追加<BIcon icon="bi:plus-circle" />
-        </b-button>
-      </Alert>
+      <img
+        class="text-image"
+        src="/text-2.png"
+        alt="出来事と重みを入力するのだ"
+      />
+      <b-button
+        margin="b-4"
+        size="lg"
+        button="primary"
+        @click="MakeTaskData()"
+        class="w-100 basicButton"
+      >
+        要素の追加<BIcon icon="bi:plus-circle" />
+      </b-button>
       <TransitionGroup name="fade" tag="div">
         <div v-for="list in userData.dataList" :key="list.id">
           <BInputGroup shadow class="inputGroup" margin="b-4">
@@ -164,7 +176,7 @@ const showData = () => {
                 aria-label="Title"
                 v-model="list.title"
               />
-              <BFormLabel for="floatingInput">何をする?</BFormLabel>
+              <BFormLabel for="floatingInput">出来事</BFormLabel>
             </BFormFloating>
             <BFormFloating>
               <BFormInput
@@ -191,7 +203,7 @@ const showData = () => {
           <b-button
             button="primary"
             margin="t-2"
-            class="w-100"
+            class="w-100 basicButton"
             @click="playQuestion"
             >実行する～！</b-button
           >
@@ -210,8 +222,7 @@ const showData = () => {
               margin="e-2"
               alt="Card image cap"
             />
-            <strong class="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
+            <strong class="me-auto">エラー</strong>
             <CloseButton dismiss="toast" />
           </ToastHeader>
           <ToastBody>{{ alertMessage }}</ToastBody>

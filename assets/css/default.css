@@ -1,6 +1,30 @@
 .defaultBackground {
-  background-color: #fef4e8;
+  background-color: #292929;
   height: 220vh;
+  background-image: linear-gradient(to right, #555555 1px, transparent 1px),
+    linear-gradient(to bottom, #555555 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+
+.center-image {
+    width: 80%; /* Adjust this value to change the image size */
+    height: auto;
+    display: block;
+    margin: 0px auto;
+    padding: 30px;
+  }
+
+.text-image {
+    width: 80%; /* Adjust this value to change the image size */
+    height: auto;
+    display: block;
+}
+
+.basicButton {
+  background-color: #2594d5;
+}
+.basicButon:hover {
+  background-color: #223b49;
 }
 
 .basicShadow {
@@ -8,9 +32,12 @@
 }
 
 .questionBackground {
-    background-color: #fef4e8;
-    height: 100vh;
-  }
+  background-color: #292929;
+  height: 100vh;
+  background-image: linear-gradient(to right, #555 1px, transparent 1px),
+  linear-gradient(to bottom, #555 1px, transparent 1px);
+  background-size: 100px 100px;
+}
 
 .inputGroup {
   border: solid 20px #2594d5;

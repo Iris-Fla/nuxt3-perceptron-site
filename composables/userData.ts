@@ -6,7 +6,7 @@ export const useData = () => {
             { id: 3, title: '着火！', weight: 2, },
         ],
         titleList: [
-            { name:'ずんだもん',do:'寝る'},
+            { name:'ずもんだん',do:'寝る'},
         ],
         biasData: -4,
         debugMode: false,

@@ -33,7 +33,7 @@ const transition: TransitionProps = {
 </template>
 
 <style lang="scss" scoped>
-$transition-mask-color: rgb(92, 161, 103);
+$transition-mask-color: rgb(92, 153, 161);
 .overlay {
   position: fixed;
   top: 0;
