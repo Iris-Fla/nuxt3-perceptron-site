@@ -167,7 +167,7 @@ const showData = () => {
       <img
         class="text-image"
         src="/text-2.png"
-        alt="出来事と重みを入力するのだ"
+        alt="条件と重みを入力するのだ"
       />
       <b-button
         margin="b-4"

@@ -21,13 +21,20 @@ const updateAns = (item: any) => {
     <Container>
       <Transition name="card">
         <Card class="questionCard text-center center-card basicShadow">
-          <h3 class="Mochi">検証モード</h3>
-          <h3>スコア:{{ testans + userData.biasData}}</h3>
+          <img
+            class="debug-image"
+            src="/debug.png"
+            alt="検証モード"
+          />
+          <h3>スコア:{{ testans + userData.biasData }}</h3>
           <ol>
             <li v-for="(item, index) in userData.dataList" :key="index">
               {{ item.title }}-重み:{{ item.weight }}
-              <BFormCheck switch >
-                <BFormCheckInput v-model="item.checked" v-on:change="updateAns(item)"/>
+              <BFormCheck switch>
+                <BFormCheckInput
+                  v-model="item.checked"
+                  v-on:change="updateAns(item)"
+                />
               </BFormCheck>
             </li>
           </ol>
