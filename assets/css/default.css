@@ -19,6 +19,9 @@
     height: auto;
     display: block;
 }
+.radius-button {
+  border-radius: 30px;
+}
 
 .basicButton {
   background-color: #2594d5;

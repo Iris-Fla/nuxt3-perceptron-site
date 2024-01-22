@@ -116,6 +116,12 @@ const showData = () => {
       <header>
         <img class="center-image" src="/Header.png" alt="Logo" />
       </header>
+      <b-a
+          button="primary"
+          class="w-30 basicButton basicShadow radius-button"
+          href="/about"
+          >パーセプトロンとは<BIcon margin="s-1" icon="bi:question-circle"
+        /></b-a>
       <Alert theme="light" class="basicShadow">
         データの読み込み,データの保存
         <BInputGroup>

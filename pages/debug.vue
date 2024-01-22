@@ -21,25 +21,29 @@ const updateAns = (item: any) => {
     <Container>
       <Transition name="card">
         <Card class="questionCard text-center center-card basicShadow">
-          <img
-            class="debug-image"
-            src="/debug.png"
-            alt="検証モード"
-          />
+          <img class="debug-image" src="/debug.png" alt="検証モード" />
           <h3>スコア:{{ testans + userData.biasData }}</h3>
-          <ol>
-            <li v-for="(item, index) in userData.dataList" :key="index">
+          <Row
+            align-items="center"
+            justify-content="between"
+            v-for="(item, index) in userData.dataList"
+            :key="index"
+          >
+            <Col col="7" margin="2">
               {{ item.title }}-重み:{{ item.weight }}
-              <BFormCheck switch>
+            </Col>
+            <Col col="3" margin="2">
+              <BFormCheck switch class="large-button">
                 <BFormCheckInput
+                  class="large-button"
                   v-model="item.checked"
                   v-on:change="updateAns(item)"
                 />
               </BFormCheck>
-            </li>
-          </ol>
+            </Col>
+          </Row>
           <ButtonGroup>
-            <b-a button="primary" href="/">
+            <b-a class="remake-button" button="primary" href="/">
               <BIcon margin="e-1" icon="bi:wrench-adjustable" />つくりなおす
             </b-a>
           </ButtonGroup>
@@ -51,10 +55,20 @@ const updateAns = (item: any) => {
 <style scoped>
 .center-card {
   position: fixed;
-  width: 40%;
+  width: 60%;
   height: auto;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.large-button {
+  width: 50px;
+  height: 30px;
+}
+
+.remake-button {
+  height: 70px;
+  font-size: 25px;
 }
 </style>
