@@ -19,6 +19,12 @@
     height: auto;
     display: block;
 }
+
+.text-image2 {
+    width: 70%; /* Adjust this value to change the image size */
+    height: auto;
+    display: block;
+}
 .radius-button {
   border-radius: 30px;
 }

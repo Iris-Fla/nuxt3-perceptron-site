@@ -171,7 +171,7 @@ const showData = () => {
         />
       </BInputGroup>
       <img
-        class="text-image"
+        class="text-image2"
         src="/text-2.png"
         alt="条件と重みを入力するのだ"
       />

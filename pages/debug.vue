@@ -5,8 +5,6 @@ const testans = ref(0);
 
 const userData = useData();
 
-const checked = ref(false);
-
 const updateAns = (item: any) => {
   if (item.checked === true) {
     testans.value += item.weight * 1;
@@ -22,8 +20,13 @@ const updateAns = (item: any) => {
       <Transition name="card">
         <Card class="questionCard text-center center-card basicShadow">
           <img class="debug-image" src="/debug.png" alt="検証モード" />
-          <h3 :style="{ color: (testans + userData.biasData) > 0 ? 'green' : 'red' }">
-            スコア:{{ testans + userData.biasData }}</h3>
+          <h3
+            :style="{
+              color: testans + userData.biasData > 0 ? 'green' : 'red',
+            }"
+          >
+            スコア:{{ testans + userData.biasData }}
+          </h3>
           <Row
             align-items="center"
             justify-content="between"
