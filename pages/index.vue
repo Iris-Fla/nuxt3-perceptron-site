@@ -128,6 +128,7 @@ const showData = () => {
           <BFormFile id="BInputGroupFile01" @change="loadData" accept=".json" />
         </BInputGroup>
         <b-button
+        margin="t-3"
           button="primary"
           class="w-30 basicButton"
           @click="downloadData"
