@@ -3,3 +3,6 @@
 
 ## Deploy
 Vercelでデプロイしています(https://nuxt3-perceptron-site.vercel.app/)
+
+## 今後の更新
+UI/UXの向上。(機能がどこに起因しているかを明確にしたい。)
