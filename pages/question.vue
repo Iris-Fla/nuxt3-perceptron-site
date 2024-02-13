@@ -64,9 +64,9 @@ const End = async () => {
   ans.value += userData.value.biasData;
   if (ans.value < 0) {
     userData.value.resulttext =
-      userData.value.titleList[0].do + "ではないのだ";
+      userData.value.titleList[0].do + "のはやめるのだ";
   } else {
-    userData.value.resulttext = userData.value.titleList[0].do + "なのだ";
+    userData.value.resulttext = userData.value.titleList[0].do + "のだ";
   }
   showStatus.value = "loading";
   await new Promise((resolve) => setTimeout(resolve, 1000));
