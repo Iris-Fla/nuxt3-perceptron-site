@@ -12,12 +12,11 @@
   "devDependencies": {
     "@nuxt/devtools": "^1.0.6",
     "npm-check-updates": "^16.14.12",
-    "nuxt": "^3.8.2",
-    "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "nuxt": "^3.10.1",
+    "vue": "^3.4.19"
   },
   "dependencies": {
-    "@vueuse/nuxt": "^10.7.0",
+    "@vueuse/nuxt": "^10.7.2",
     "gsap": "^3.12.4",
     "ipx": "^3.0.0",
     "nuxt-icon": "^0.6.7",
