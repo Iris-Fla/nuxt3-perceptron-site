@@ -2,7 +2,7 @@
 import type { TransitionProps } from "vue";
 const { $gsap: gsap } = useNuxtApp();
 
-let tl: gsap.core.Timeline = gsap.timeline()
+const tl: gsap.core.Timeline = gsap.timeline()
 const transition: TransitionProps = {
   name: 'page',
   mode: 'out-in',

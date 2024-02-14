@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import "~/assets/css/default.css";
 
 //auto importされるので、importは不要(VScodeの参照元が出ないので表記)
 import { ref } from "vue";
@@ -248,3 +247,12 @@ const showData = () => {
     </Container>
   </div>
 </template>
+<style scoped>
+.radius-button {
+  border-radius: 30px;
+}
+
+.basicButton {
+  background-color: #2594d5;
+}
+</style>

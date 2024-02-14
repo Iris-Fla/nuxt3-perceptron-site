@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import "~/assets/css/default.css";
 </script>
 <template>
   <div class="defaultBackground">

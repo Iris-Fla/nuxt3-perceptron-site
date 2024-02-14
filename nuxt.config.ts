@@ -7,6 +7,7 @@ export default defineNuxtConfig({
       'nuxt-icon',
       "@nuxt/image"
   ],
+  css:['~/assets/css/default.css',"bootstrap/scss/bootstrap.scss"],
   app: {
     　pageTransition: { name: 'page', mode: 'out-in' },
       head: {
@@ -34,9 +35,6 @@ export default defineNuxtConfig({
           ],
       },
   },
-  css: [
-      "bootstrap/scss/bootstrap.scss"
-  ],
   vite: {
       server: {
           watch: {
