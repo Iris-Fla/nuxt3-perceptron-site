@@ -20,7 +20,7 @@
     "gsap": "^3.12.4",
     "ipx": "^3.0.0",
     "nuxt-icon": "^0.6.7",
-    "usebootstrap": "^0.2.1",
+    "usebootstrap": "^3.5.7",
     "usebootstrap-docs": "^0.0.11"
   }
 }
