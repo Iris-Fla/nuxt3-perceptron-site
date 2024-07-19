@@ -7,7 +7,7 @@ export default defineNuxtConfig({
       'nuxt-icon',
       "@nuxt/image"
   ],
-  css:['~/assets/css/default.css',"bootstrap/scss/bootstrap.scss"],
+  css:['~/assets/css/default.css'],
   app: {
     　pageTransition: { name: 'page', mode: 'out-in' },
       head: {
@@ -28,18 +28,20 @@ export default defineNuxtConfig({
             },
             {
               rel: "stylesheet",
-          // TODO: ここに先ほど控えたhrefの中身を記載
               href: "https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=Mochiy+Pop+One&display=swap",
               crossorigin: "",
             },
           ],
       },
   },
+
   vite: {
       server: {
           watch: {
               usePolling: true
           }
       },
-  }
+  },
+
+  compatibilityDate: '2024-07-19'
 })
